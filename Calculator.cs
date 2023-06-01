@@ -1,5 +1,6 @@
 ﻿using Calculator.Data;
 using Calculator.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,23 @@ namespace Calculator
             _db.Calculations.Add(calc);
             _db.SaveChanges();
         }
+        
         public List<Calculation> GetCalculations()
         {
             Context _db = new Context();
             var calculations = _db.Calculations.ToList();
 
             return calculations;
+        }
+        public void DisplayAllCalculations()
+        {
+            var calc = new Calculator();
+            List<Calculation> list = calc.GetCalculations();
+            foreach (var c in list)
+            {
+                Console.WriteLine($"ID #{c.CalculationID}: {c.Value1} {c.Operation} {c.Value2} = {c.Result} \t: Date Posted:{c.DateCalculated}");
+
+            }
         }
 
         public double Add(double num, double num2)
@@ -44,11 +56,34 @@ namespace Calculator
         }
         public double Subtract(double num, double num2)
         {
-            return num - num2;
+            string operation = "-";
+            double result = num - num2;
+
+            SaveCalculation(num, num2, result, operation);
+
+            return result;
+
         }
+    
         public double Division(double num, double num2)
         {
-            return num / num2;
+            string operation = "/";
+            double result = num / num2;
+
+            SaveCalculation(num, num2, result, operation);
+
+            return result;
+
+        }    
+        public double Multiply(double num, double num2)
+        {
+            string operation = "*";
+            double result = num * num2;
+
+            SaveCalculation(num, num2, result, operation);
+
+            return result;
+
         }
     }
 }
