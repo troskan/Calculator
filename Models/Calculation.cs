@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Models
 {
-    internal class Calculation
+    public class Calculation
     {
         [Key]
         public int CalculationID { get; set; }

@@ -9,21 +9,30 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    internal class Calculator
+    public class Calculator
     {
         public void SaveCalculation(double num, double num2, double result, string operation)
         {
-            Context _db = new Context();
-            Calculation calc = new Calculation()
+            try
             {
-                Value1 = num,
-                Value2 = num2,
-                Result = result,
-                Operation = operation,
-                DateCalculated = DateTime.Now
-            };
-            _db.Calculations.Add(calc);
-            _db.SaveChanges();
+                Context _db = new Context();
+                Calculation calc = new Calculation()
+                {
+                    Value1 = num,
+                    Value2 = num2,
+                    Result = result,
+                    Operation = operation,
+                    DateCalculated = DateTime.Now
+                };
+                _db.Calculations.Add(calc);
+                _db.SaveChanges();
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: Please try again." +
+                    $"{e}");
+            }
         }
         
         public List<Calculation> GetCalculations()
